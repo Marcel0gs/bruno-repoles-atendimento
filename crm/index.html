@@ -332,8 +332,13 @@ table.eq td.nome small{display:block;color:var(--muted);font-weight:600}
 .regras-livres textarea:focus,.nova-regra input:focus{border-color:var(--gold);border-style:solid;background:#fff;box-shadow:0 0 0 3px rgba(217,150,43,.15)}
 .regras-livres .pe{display:flex;align-items:center;gap:12px;margin-top:10px;flex-wrap:wrap}
 .regras-livres .pe small{color:var(--muted);font-size:12.3px}
-.nova-regra{display:flex;gap:8px;margin-top:2px}
-.nova-regra input{flex:1;min-width:0;border:1px dashed #d6d2c8;border-radius:10px;padding:10px 12px;font-size:13px;background:#fcfbf8;outline:none;transition:border-color .15s,box-shadow .15s,background .15s}
+.nova-regra{display:grid;gap:8px;margin-top:6px;padding:12px;border:1.5px dashed #e3c78c;border-radius:12px;background:#fffcf5}
+.nova-regra label{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:800;color:var(--gold-deep)}
+.nova-regra label .ic{width:15px;height:15px}
+.nova-regra .linha{display:flex;gap:8px}
+.nova-regra input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px;background:#fff;outline:none;transition:border-color .15s,box-shadow .15s}
+.nunca .nova-regra{border-color:#f0bfa6;background:#fffaf7}
+.nunca .nova-regra label{color:var(--bad)}
 .check .tag-nova{margin-left:auto;font-size:10.5px;font-weight:800;color:var(--ok);background:var(--ok-soft);border-radius:6px;padding:1px 7px}
 .base{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .base div{border:1px solid var(--line);border-radius:11px;padding:11px 12px;font-size:12.5px}
@@ -619,7 +624,7 @@ Se o cliente disser que já é cliente da imobiliária, passar pro Atendimento.<
 <div id="dica"></div>
 <div class="avisos" id="avisos"></div>
 
-<script src="../assets/icones.js"></script>
-<script src="crm.js"></script>
+<script src="../assets/icones.js?v=4"></script>
+<script src="crm.js?v=4"></script>
 </body>
 </html>
