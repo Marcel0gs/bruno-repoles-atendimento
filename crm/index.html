@@ -52,7 +52,8 @@ a{color:inherit}
 .topo{display:flex;align-items:center;gap:14px;padding:14px 24px;background:var(--card);border-bottom:1px solid var(--line)}
 .topo h1{font-size:18px;font-weight:800;letter-spacing:-.01em;white-space:nowrap}
 .selo-demo{font-size:11px;font-weight:700;color:var(--gold-deep);background:var(--gold-soft);border:1px solid #f1dcb3;border-radius:99px;padding:3px 10px;white-space:nowrap}
-.busca{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 12px;color:var(--muted);width:260px}
+.busca{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 12px;color:var(--muted);flex:0 1 260px;min-width:120px}
+#btn-simular,.topo .icone-btn,.eu,.voltar-site{flex-shrink:0}
 .busca input{border:0;background:none;outline:0;width:100%;font-size:13px}
 .icone-btn{position:relative;width:38px;height:38px;border-radius:10px;display:grid;place-items:center;border:1px solid var(--line);background:var(--card);color:var(--text)}
 .icone-btn .ponto{position:absolute;top:7px;right:8px;width:8px;height:8px;border-radius:50%;background:var(--bad);border:2px solid #fff}
@@ -326,6 +327,14 @@ table.eq td.nome small{display:block;color:var(--muted);font-weight:600}
 .check.on .caixa .ic{opacity:1}
 .nunca .check.on{border-color:#f6cdb9;background:var(--bad-soft)}
 .nunca .check.on .caixa{background:var(--bad);border-color:var(--bad)}
+.as-grade .largo{grid-column:1/-1}
+.regras-livres textarea{width:100%;min-height:148px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:13.5px;line-height:1.7;resize:vertical;background:#fcfbf8;outline:none;transition:border-color .15s,box-shadow .15s,background .15s}
+.regras-livres textarea:focus,.nova-regra input:focus{border-color:var(--gold);border-style:solid;background:#fff;box-shadow:0 0 0 3px rgba(217,150,43,.15)}
+.regras-livres .pe{display:flex;align-items:center;gap:12px;margin-top:10px;flex-wrap:wrap}
+.regras-livres .pe small{color:var(--muted);font-size:12.3px}
+.nova-regra{display:flex;gap:8px;margin-top:2px}
+.nova-regra input{flex:1;min-width:0;border:1px dashed #d6d2c8;border-radius:10px;padding:10px 12px;font-size:13px;background:#fcfbf8;outline:none;transition:border-color .15s,box-shadow .15s,background .15s}
+.check .tag-nova{margin-left:auto;font-size:10.5px;font-weight:800;color:var(--ok);background:var(--ok-soft);border-radius:6px;padding:1px 7px}
 .base{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .base div{border:1px solid var(--line);border-radius:11px;padding:11px 12px;font-size:12.5px}
 .base b{display:flex;align-items:center;gap:6px;font-size:13px;margin-bottom:3px}
@@ -554,6 +563,17 @@ table.eq td.nome small{display:block;color:var(--muted);font-weight:600}
       <!-- ASSISTENTE -->
       <section class="vista" id="v-assistente">
         <div class="grade as-grade">
+          <div class="card largo regras-livres">
+            <div class="card-cab"><div><h3>Regras escritas por vocês</h3><p>Escreva do jeito que explicaria pra uma atendente nova. A assistente segue.</p></div><span class="dir chip chip-ia"><svg class="ic"><use href="#i-sparkles"/></svg>Texto livre</span></div>
+            <div class="card-corpo">
+              <textarea id="regras-txt" aria-label="Regras escritas pela imobiliária">Aluguel acima de R$ 3 mil: passar direto pro Bruno.
+Cliente de fora de João Monlevade: oferecer uma visita por vídeo antes da presencial.
+Não mandar o endereço exato do imóvel antes da visita marcada, só o bairro.
+Pedido de visita no sábado depois das 12h: oferecer segunda de manhã.
+Se o cliente disser que já é cliente da imobiliária, passar pro Atendimento.</textarea>
+              <div class="pe"><button class="btn btn-ouro" id="salvar-regras"><svg class="ic ic-sm"><use href="#i-check"/></svg>Salvar regras</button><small>Vale a partir da próxima mensagem. Dá pra mudar quando quiser.</small></div>
+            </div>
+          </div>
           <div class="card">
             <div class="card-cab"><div><h3>Funcionamento</h3><p>Vocês decidem quando e como ela atende</p></div></div>
             <div class="card-corpo">

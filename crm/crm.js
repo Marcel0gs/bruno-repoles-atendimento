@@ -610,14 +610,28 @@ function renderEquipe() {
 }
 
 /* ---------- Regras da assistente ---------- */
-function checks(alvo, itens) {
-  $(alvo).innerHTML = itens.map(([t, on]) => `<div class="check ${on ? 'on' : ''}" role="checkbox" tabindex="0" aria-checked="${on}"><span class="caixa">${ic('check')}</span>${t}</div>`).join('');
-  $(alvo).querySelectorAll('.check').forEach(c => c.onclick = () => { c.classList.toggle('on'); c.setAttribute('aria-checked', c.classList.contains('on')); });
+const ligaCheck = c => c.onclick = () => { c.classList.toggle('on'); c.setAttribute('aria-checked', c.classList.contains('on')); };
+function checks(alvo, itens, dica) {
+  $(alvo).innerHTML = itens.map(([t, on]) => `<div class="check ${on ? 'on' : ''}" role="checkbox" tabindex="0" aria-checked="${!!on}"><span class="caixa">${ic('check')}</span>${t}</div>`).join('')
+    + `<form class="nova-regra"><input placeholder="${dica}" aria-label="Escrever nova regra"><button class="btn" type="submit">${ic('plus', 'ic-sm')}Adicionar</button></form>`;
+  $(alvo).querySelectorAll('.check').forEach(ligaCheck);
+  const f = $(alvo).querySelector('.nova-regra'), campo = f.querySelector('input');
+  f.onsubmit = e => {
+    e.preventDefault();
+    const v = campo.value.trim(); if (!v) return campo.focus();
+    const c = document.createElement('div');
+    c.className = 'check on'; c.setAttribute('role', 'checkbox'); c.tabIndex = 0; c.setAttribute('aria-checked', 'true');
+    c.innerHTML = `<span class="caixa">${ic('check')}</span><span class="txt"></span><span class="tag-nova">Nova</span>`;
+    c.querySelector('.txt').textContent = v;
+    ligaCheck(c); f.before(c); f.reset();
+    avisa('Regra adicionada', 'A assistente já segue essa regra nas próximas conversas.', 'check');
+  };
 }
 function renderAssistente() {
-  checks('#ch-passar', [['O cliente quer visitar ou marcar horário', 1], ['Pede desconto, permuta ou condição de pagamento', 1], ['Quer vender ou alugar o imóvel dele (captação)', 1], ['Manda foto ou documento', 1], ['Reclama ou pede pra falar com uma pessoa', 1], ['Pergunta algo que não está na base de conhecimento', 1]]);
-  checks('#ch-nunca', [['Inventar preço, condição ou disponibilidade', 1], ['Prometer desconto ou aprovação de financiamento', 1], ['Insistir depois que o cliente disse não', 1], ['Dizer que é uma pessoa, se perguntarem', 1]]);
-  checks('#ch-quali', [['Compra ou aluguel', 1], ['Bairro ou região', 1], ['Faixa de valor', 1], ['Quartos e vagas', 1], ['Financiamento, FGTS ou recurso próprio', 1], ['Prazo pra mudar', 1], ['Tem imóvel pra dar de entrada', 0]]);
+  checks('#ch-passar', [['O cliente quer visitar ou marcar horário', 1], ['Pede desconto, permuta ou condição de pagamento', 1], ['Quer vender ou alugar o imóvel dele (captação)', 1], ['Manda foto ou documento', 1], ['Reclama ou pede pra falar com uma pessoa', 1], ['Pergunta algo que não está na base de conhecimento', 1]], 'Escreva uma situação. Ex.: pergunta de imóvel comercial');
+  checks('#ch-nunca', [['Inventar preço, condição ou disponibilidade', 1], ['Prometer desconto ou aprovação de financiamento', 1], ['Insistir depois que o cliente disse não', 1], ['Dizer que é uma pessoa, se perguntarem', 1]], 'Escreva o que ela nunca deve fazer. Ex.: mandar o endereço exato');
+  checks('#ch-quali', [['Compra ou aluguel', 1], ['Bairro ou região', 1], ['Faixa de valor', 1], ['Quartos e vagas', 1], ['Financiamento, FGTS ou recurso próprio', 1], ['Prazo pra mudar', 1], ['Tem imóvel pra dar de entrada', 0]], 'Escreva uma pergunta. Ex.: tem animal de estimação?');
+  $('#salvar-regras').onclick = () => avisa('Regras salvas', 'A assistente segue o que vocês escreveram a partir da próxima mensagem.', 'check');
   const base = [['file-text', 'Documentos da locação', 'RG, CPF, comprovantes de renda e residência'], ['wallet', 'Garantias aceitas', 'Seguro fiança ou caução'], ['building-2', 'Financiamento e FGTS', 'Como funciona e o que o corretor vê com o cliente'], ['map-pin', 'Região atendida', 'João Monlevade e cidades vizinhas'], ['clock-3', 'Horário da equipe', 'Seg a sex, 8h às 18h. Sáb, 8h às 12h'], ['calendar-check', 'Como funciona a visita', 'Pré-agenda e o corretor confirma']];
   $('#base').innerHTML = base.map(([i, t, s]) => `<div><b>${ic(i)}${t}</b><small>${s}</small></div>`).join('');
   document.querySelectorAll('#v-assistente .chave').forEach(c => c.onclick = () => c.classList.toggle('on'));
